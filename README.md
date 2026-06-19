@@ -23,19 +23,19 @@ The two masters are interchangeable (identical port lists). The testbench wires 
 ## System architecture
 
 ```
-        ┌────────────────┐                                          ┌────────────────┐
-        │   master 0     │  AW/W/AR  ──►        ──► AW/W/AR         │                │
-        │ simple_axi_... │ ◄── B/R                  B/R ──►         │                │
-        └────────────────┘        ┌────────────────────────┐        │                │
-                                  │  2:1 round-robin       │        │   slave        │
-                                  │  interconnect          │   ──►  │  (in-order     │
-                                  │  • RR arbitration      │        │   responder)   │
-        ┌────────────────┐        │  • ID widen {route,id} │        │                │
-        │   master 1     │  AW/W/AR ►  • W routes by AW    │        │                │
-        │ realistic_axi..│ ◄── B/R     • wr_q / rd_q order │        │                │
-        └────────────────┘        └────────────────────────┘        └────────────────┘
-              ID_WIDTH bits              ID_WIDTH+1 bits              ID_WIDTH+1 bits
-                                       (route bit prepended)
+        ┌────────────────┐                                              ┌────────────────┐
+        │   master 0     │                                              │                │
+        │ simple_axi_... │                                              │                │
+        └────────────────┘        ┌────────────────────────┐            │                │
+                    AW/W/AR  ──►  │  2:1 round-robin       │──► AW/W/AR │   slave        │
+                     B/R     ◄──  │  interconnect          │ ◄── B/R    │  (in-order     │
+                                  │  • RR arbitration      │            │   responder)   │
+        ┌────────────────┐        │  • ID widen {route,id} │            │                │
+        │   master 1     │        |  • W routes by AW      │            │                │
+        │ realistic_axi..│        |  • wr_q / rd_q order   │            │                │
+        └────────────────┘        └────────────────────────┘            └────────────────┘
+          ID_WIDTH bits                 ID_WIDTH+1 bits                   ID_WIDTH+1 bits
+                                   (route bit prepended)
 ```
 
 - **Masters** issue independent write (AW/W/B) and read (AR/R) transactions and self-check every response.
