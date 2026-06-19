@@ -124,13 +124,6 @@ xelab tb_axi_bus_system -s tb_sim
 xsim  tb_sim -runall
 ```
 Or add the files to a Vivado project, set `tb_axi_bus_system` as the simulation top, and **Run All** (the run exceeds the default 1000 ns window, so use *Run All*, not *Run*).
-
-### Other simulators
-Any SystemVerilog-2012 simulator works, e.g.:
-```sh
-# Questa/ModelSim
-vlog -sv *.sv && vsim -c tb_axi_bus_system -do "run -all; quit"
-```
 A VCD waveform `wave_rr_axi4_id_outstanding.vcd` is dumped by default.
 
 ### Expected result
