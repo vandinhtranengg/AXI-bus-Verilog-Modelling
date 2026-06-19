@@ -26,14 +26,14 @@ The two masters are interchangeable (identical port lists). The testbench wires 
         ┌────────────────┐                                   ┌────────────────┐
         │   master 0     │  AW/W/AR  ──►        ──► AW/W/AR  │                │
         │ simple_axi_... │ ◄── B/R                  B/R ──►  │                │
-        └────────────────┘        ┌───────────────────────┐ │                │
+        └────────────────┘        ┌────────────────────────┐ │                │
                                   │  2:1 round-robin       │ │   slave        │
                                   │  interconnect          │►│  (in-order     │
                                   │  • RR arbitration      │ │   responder)   │
         ┌────────────────┐        │  • ID widen {route,id} │ │                │
         │   master 1     │  AW/W/AR ►  • W routes by AW    │ │                │
         │ realistic_axi..│ ◄── B/R     • wr_q / rd_q order │ │                │
-        └────────────────┘        └───────────────────────┘ └────────────────┘
+        └────────────────┘        └────────────────────────┘ └────────────────┘
               ID_WIDTH bits              ID_WIDTH+1 bits         ID_WIDTH+1 bits
                                        (route bit prepended)
 ```
@@ -176,6 +176,4 @@ The `txn=` key is identical across master, arbiter, and slave, so a single trans
 
 ---
 
-## License
 
-Released under the MIT License — see `LICENSE`. (Add the file before publishing, or substitute the license of your choice.)
